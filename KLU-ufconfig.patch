@@ -1,0 +1,81 @@
+--- KLU/Makefile.orig	2009-11-07 18:37:57.000000000 +0100
++++ KLU/Makefile	2012-01-10 17:39:06.842722146 +0100
+@@ -2,7 +2,7 @@
+ 
+ default: demos
+ 
+-include ../UFconfig/UFconfig.mk
++include /usr/share/misc/UFconfig.mk
+ 
+ demos:
+ 	( cd Lib ; $(MAKE) )
+--- KLU/Lib/Makefile.orig	2009-11-11 21:16:32.000000000 +0100
++++ KLU/Lib/Makefile	2012-01-10 17:41:46.846060837 +0100
+@@ -2,7 +2,7 @@
+ 
+ ccode: all
+ 
+-include ../../UFconfig/UFconfig.mk
++include /usr/share/misc/UFconfig.mk
+ 
+ # for testing only:
+ # TEST = -DTESTING
+@@ -10,10 +10,10 @@
+ C = $(CC) $(CFLAGS)
+ 
+ INC = ../Include/klu.h ../Include/klu_internal.h ../Include/klu_version.h \
+-    ../../UFconfig/UFconfig.h Makefile
++    Makefile
+ 
+-I = -I../../AMD/Include -I../../COLAMD/Include -I../../BTF/Include \
+-    -I../Include -I../../UFconfig
++I = -I/usr/include/amd -I/usr/include/colamd -I/usr/include/btf \
++    -I../Include
+ 
+ all: library
+ 
+--- KLU/Demo/Makefile.orig	2009-11-11 21:13:13.000000000 +0100
++++ KLU/Demo/Makefile	2012-01-10 18:40:07.339511379 +0100
+@@ -3,15 +3,14 @@
+ 
+ default: all
+ 
+-include ../../UFconfig/UFconfig.mk
++include /usr/share/misc/UFconfig.mk
+ 
+-LIB = ../Lib/libklu.a  ../../BTF/Lib/libbtf.a \
+-	../../AMD/Lib/libamd.a ../../COLAMD/Lib/libcolamd.a
++LIB = ../Lib/libklu.a -lbtf -lamd -lcolamd
+ 
+-CHOLMOD = ../../CHOLMOD/Lib/libcholmod.a
++CHOLMOD = -lcholmod
+ 
+-I = -I../../UFconfig -I../../AMD/Include -I../../COLAMD/Include \
+-	-I../../BTF/Include -I../Include -I../../CHOLMOD/Include
++I = -I/usr/include/amd -I/usr/include/colamd \
++	-I/usr/include/btf -I../Include -I/usr/include/cholmod
+ 
+ all: $(LIB) klu_simple $(CHOLMOD) kludemo kluldemo
+ 	- ./klu_simple
+@@ -31,21 +30,6 @@
+ ../Lib/libklu.a:
+ 	( cd ../Lib ; $(MAKE) )
+ 
+-../../BTF/Lib/libbtf.a:
+-	( cd ../../BTF ; $(MAKE) library )
+-
+-../../AMD/Lib/libamd.a:
+-	( cd ../../AMD ; $(MAKE) library )
+-
+-../../COLAMD/Lib/libcolamd.a:
+-	( cd ../../COLAMD ; $(MAKE) library )
+-
+-../../CHOLMOD/Lib/libcholmod.a:
+-	( cd ../../CHOLMOD ; $(MAKE) library )
+-#	( cd ../../CAMD ; $(MAKE) )
+-#	( cd ../../CCOLAMD ; $(MAKE) )
+-#	( cd ../../metis-4.0 ; $(MAKE) )
+-
+ purge: distclean
+ 
+ distclean: clean

@@ -1,0 +1,314 @@
+--- KLU/Lib/Makefile.orig	2012-01-10 18:24:02.356145735 +0100
++++ KLU/Lib/Makefile	2012-01-10 18:30:56.929492950 +0100
+@@ -17,7 +17,7 @@
+ 
+ all: library
+ 
+-library: libklu.a
++library: libklu.la
+ 
+ KLU_D = klu_d.o klu_d_kernel.o klu_d_dump.o \
+     klu_d_factor.o klu_d_free_numeric.o klu_d_solve.o \
+@@ -47,109 +47,112 @@
+ 
+ OBJ = $(COMMON) $(KLU_D) $(KLU_Z) $(KLU_L) $(KLU_ZL)
+ 
+-libklu.a: $(OBJ)
+-	$(AR) libklu.a $(OBJ)
+-	$(RANLIB) libklu.a
++libklu.la: $(OBJ)
++	libtool --tag=CC --mode=link $(CC) $(LDFLAGS) -o libklu.la -rpath $(libdir) $(OBJ:.o=.lo) -lcolamd -lamd -lbtf -lm
++
++install: libklu.la
++	install -d $(DESTDIR)$(libdir)
++	libtool --mode=install cp libklu.la $(DESTDIR)$(libdir)/libklu.la
+ 
+ $(OBJ): $(INC)
+ 
+ #-------------------------------------------------------------------------------
+ 
+ klu_d.o: ../Source/klu.c
+-	$(C) -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c $(I) $< -o $@
+ 
+ klu_z.o: ../Source/klu.c
+-	$(C) -c -DCOMPLEX $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX $(I) $< -o $@
+ 
+ klu_d_kernel.o: ../Source/klu_kernel.c
+-	$(C) -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c $(I) $< -o $@
+ 
+ klu_z_kernel.o: ../Source/klu_kernel.c
+-	$(C) -c -DCOMPLEX $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX $(I) $< -o $@
+ 
+ klu_d_sort.o: ../Source/klu_sort.c
+-	$(C) -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c $(I) $< -o $@
+ 
+ klu_z_sort.o: ../Source/klu_sort.c
+-	$(C) -c -DCOMPLEX $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX $(I) $< -o $@
+ 
+ klu_d_diagnostics.o: ../Source/klu_diagnostics.c
+-	$(C) -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c $(I) $< -o $@
+ 
+ klu_z_diagnostics.o: ../Source/klu_diagnostics.c
+-	$(C) -c -DCOMPLEX $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX $(I) $< -o $@
+ 
+ klu_d_dump.o: ../Source/klu_dump.c
+-	$(C) -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c $(I) $< -o $@
+ 
+ klu_z_dump.o: ../Source/klu_dump.c
+-	$(C) -c -DCOMPLEX $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX $(I) $< -o $@
+ 
+ klu_d_factor.o: ../Source/klu_factor.c
+-	$(C) -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c $(I) $< -o $@
+ 
+ klu_z_factor.o: ../Source/klu_factor.c
+-	$(C) -c -DCOMPLEX $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX $(I) $< -o $@
+ 
+ klu_d_free_numeric.o: ../Source/klu_free_numeric.c
+-	$(C) -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c $(I) $< -o $@
+ 
+ klu_z_free_numeric.o: ../Source/klu_free_numeric.c
+-	$(C) -c -DCOMPLEX $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX $(I) $< -o $@
+ 
+ klu_d_extract.o: ../Source/klu_extract.c
+-	$(C) -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c $(I) $< -o $@
+ 
+ klu_z_extract.o: ../Source/klu_extract.c
+-	$(C) -c -DCOMPLEX $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX $(I) $< -o $@
+ 
+ klu_d_refactor.o: ../Source/klu_refactor.c
+-	$(C) -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c $(I) $< -o $@
+ 
+ klu_z_refactor.o: ../Source/klu_refactor.c
+-	$(C) -c -DCOMPLEX $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX $(I) $< -o $@
+ 
+ klu_d_scale.o: ../Source/klu_scale.c
+-	$(C) -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c $(I) $< -o $@
+ 
+ klu_z_scale.o: ../Source/klu_scale.c
+-	$(C) -c -DCOMPLEX $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX $(I) $< -o $@
+ 
+ klu_d_solve.o: ../Source/klu_solve.c
+-	$(C) -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c $(I) $< -o $@
+ 
+ klu_z_solve.o: ../Source/klu_solve.c
+-	$(C) -c -DCOMPLEX $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX $(I) $< -o $@
+ 
+ klu_d_tsolve.o: ../Source/klu_tsolve.c
+-	$(C) -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c $(I) $< -o $@
+ 
+ klu_z_tsolve.o: ../Source/klu_tsolve.c
+-	$(C) -c -DCOMPLEX $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX $(I) $< -o $@
+ 
+ #-------------------------------------------------------------------------------
+ 
+ klu_analyze.o: ../Source/klu_analyze.c
+-	$(C) -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c $(I) $< -o $@
+ 
+ klu_analyze_given.o: ../Source/klu_analyze_given.c
+-	$(C) -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c $(I) $< -o $@
+ 
+ klu_defaults.o: ../Source/klu_defaults.c
+-	$(C) -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c $(I) $< -o $@
+ 
+ klu_free_symbolic.o: ../Source/klu_free_symbolic.c
+-	$(C) -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c $(I) $< -o $@
+ 
+ klu_memory.o: ../Source/klu_memory.c
+-	$(C) -c $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c $(I) $< -o $@
+ 
+ #-------------------------------------------------------------------------------
+ 
+ purge: distclean
+ 
+ distclean: clean
+-	- $(RM) libklu.a 
++	- $(RM) libklu.la 
+ 
+ clean:
+ 	- $(RM) $(CLEAN)
+@@ -157,92 +160,92 @@
+ #-------------------------------------------------------------------------------
+ 
+ klu_l.o: ../Source/klu.c
+-	$(C) -c -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
+ 
+ klu_zl.o: ../Source/klu.c
+-	$(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
+ 
+ klu_l_kernel.o: ../Source/klu_kernel.c
+-	$(C) -c -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
+ 
+ klu_zl_kernel.o: ../Source/klu_kernel.c
+-	$(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
+ 
+ klu_l_sort.o: ../Source/klu_sort.c
+-	$(C) -c -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
+ 
+ klu_zl_sort.o: ../Source/klu_sort.c
+-	$(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
+ 
+ klu_l_diagnostics.o: ../Source/klu_diagnostics.c
+-	$(C) -c -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
+ 
+ klu_zl_diagnostics.o: ../Source/klu_diagnostics.c
+-	$(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
+ 
+ klu_l_dump.o: ../Source/klu_dump.c
+-	$(C) -c -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
+ 
+ klu_zl_dump.o: ../Source/klu_dump.c
+-	$(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
+ 
+ klu_l_factor.o: ../Source/klu_factor.c
+-	$(C) -c -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
+ 
+ klu_zl_factor.o: ../Source/klu_factor.c
+-	$(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
+ 
+ klu_l_free_numeric.o: ../Source/klu_free_numeric.c
+-	$(C) -c -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
+ 
+ klu_zl_free_numeric.o: ../Source/klu_free_numeric.c
+-	$(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
+ 
+ klu_l_extract.o: ../Source/klu_extract.c
+-	$(C) -c -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
+ 
+ klu_zl_extract.o: ../Source/klu_extract.c
+-	$(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
+ 
+ klu_l_refactor.o: ../Source/klu_refactor.c
+-	$(C) -c -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
+ 
+ klu_zl_refactor.o: ../Source/klu_refactor.c
+-	$(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
+ 
+ klu_l_scale.o: ../Source/klu_scale.c
+-	$(C) -c -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
+ 
+ klu_zl_scale.o: ../Source/klu_scale.c
+-	$(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
+ 
+ klu_l_solve.o: ../Source/klu_solve.c
+-	$(C) -c -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
+ 
+ klu_zl_solve.o: ../Source/klu_solve.c
+-	$(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
+ 
+ klu_l_tsolve.o: ../Source/klu_tsolve.c
+-	$(C) -c -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
+ 
+ klu_zl_tsolve.o: ../Source/klu_tsolve.c
+-	$(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DCOMPLEX -DDLONG $(I) $< -o $@
+ 
+ #-------------------------------------------------------------------------------
+ 
+ klu_l_analyze.o: ../Source/klu_analyze.c
+-	$(C) -c -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
+ 
+ klu_l_analyze_given.o: ../Source/klu_analyze_given.c
+-	$(C) -c -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
+ 
+ klu_l_defaults.o: ../Source/klu_defaults.c
+-	$(C) -c -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
+ 
+ klu_l_free_symbolic.o: ../Source/klu_free_symbolic.c
+-	$(C) -c -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
+ 
+ klu_l_memory.o: ../Source/klu_memory.c
+-	$(C) -c -DDLONG $(I) $< -o $@
++	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
+ 
+ #-------------------------------------------------------------------------------
+--- KLU/Demo/Makefile.orig	2012-01-10 18:40:27.226178712 +0100
++++ KLU/Demo/Makefile	2012-01-10 19:04:07.996226284 +0100
+@@ -5,7 +5,7 @@
+ 
+ include /usr/share/misc/UFconfig.mk
+ 
+-LIB = ../Lib/libklu.a -lbtf -lamd -lcolamd
++LIB = ../Lib/libklu.la -lbtf -lamd -lcolamd
+ 
+ CHOLMOD = -lcholmod
+ 
+@@ -27,7 +27,7 @@
+ 	- ./kluldemo < ../Matrix/w156.mtx
+ 	- ./kluldemo < ../Matrix/ctina.mtx
+ 
+-../Lib/libklu.a:
++../Lib/libklu.la:
+ 	( cd ../Lib ; $(MAKE) )
+ 
+ purge: distclean
+@@ -40,11 +40,11 @@
+ 	- $(RM) $(CLEAN)
+ 
+ kludemo: kludemo.c Makefile $(LIB)
+-	$(CC) $(CFLAGS) $(I) kludemo.c -o kludemo $(LIB) $(CHOLMOD) -lm
++	libtool --tag=CC --mode=link $(CC) $(CFLAGS) $(I) kludemo.c -o kludemo $(LIB) $(CHOLMOD) -lm
+ 
+ kluldemo: kludemo.c Makefile $(LIB)
+-	$(CC) $(CFLAGS) $(I) kluldemo.c -o kluldemo $(LIB) $(CHOLMOD) -lm
++	libtool --tag=CC --mode=link $(CC) $(CFLAGS) $(I) kluldemo.c -o kluldemo $(LIB) $(CHOLMOD) -lm
+ 
+ klu_simple: klu_simple.c Makefile $(LIB)
+-	$(CC) $(CFLAGS) $(I) klu_simple.c -o klu_simple $(LIB) -lm
++	libtool --tag=CC --mode=link $(CC) $(CFLAGS) $(I) klu_simple.c -o klu_simple $(LIB) -lm
+ 	- ./klu_simple
