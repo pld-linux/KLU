@@ -1,5 +1,5 @@
---- KLU/Lib/Makefile.orig	2012-01-10 18:24:02.356145735 +0100
-+++ KLU/Lib/Makefile	2012-01-10 18:30:56.929492950 +0100
+--- KLU/Lib/Makefile.orig	2012-01-29 18:59:19.771183432 +0100
++++ KLU/Lib/Makefile	2012-01-29 21:25:04.354809566 +0100
 @@ -17,7 +17,7 @@
  
  all: library
@@ -14,8 +14,8 @@
  OBJ = $(COMMON) $(KLU_D) $(KLU_Z) $(KLU_L) $(KLU_ZL)
  
 -libklu.a: $(OBJ)
--	$(AR) libklu.a $(OBJ)
--	$(RANLIB) libklu.a
+-	$(ARCHIVE)  libklu.a $(OBJ)
+-	- $(RANLIB) libklu.a
 +libklu.la: $(OBJ)
 +	libtool --tag=CC --mode=link $(CC) $(LDFLAGS) -o libklu.la -rpath $(libdir) $(OBJ:.o=.lo) -lcolamd -lamd -lbtf -lm
 +
@@ -151,7 +151,7 @@
  
  distclean: clean
 -	- $(RM) libklu.a 
-+	- $(RM) libklu.la 
++	- $(RM) libklu.la
  
  clean:
  	- $(RM) $(CLEAN)
@@ -277,8 +277,8 @@
 +	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
  
  #-------------------------------------------------------------------------------
---- KLU/Demo/Makefile.orig	2012-01-10 18:40:27.226178712 +0100
-+++ KLU/Demo/Makefile	2012-01-10 19:04:07.996226284 +0100
+--- KLU/Demo/Makefile.orig	2012-01-29 18:59:19.771183432 +0100
++++ KLU/Demo/Makefile	2012-01-29 21:26:17.944812032 +0100
 @@ -5,7 +5,7 @@
  
  include /usr/share/misc/UFconfig.mk
@@ -301,14 +301,14 @@
  	- $(RM) $(CLEAN)
  
  kludemo: kludemo.c Makefile $(LIB)
--	$(CC) $(CFLAGS) $(I) kludemo.c -o kludemo $(LIB) $(CHOLMOD) -lm
-+	libtool --tag=CC --mode=link $(CC) $(CFLAGS) $(I) kludemo.c -o kludemo $(LIB) $(CHOLMOD) -lm
+-	$(CC) $(CF) $(I) kludemo.c -o kludemo $(LIB) $(CHOLMOD) -lm
++	libtool --tag=CC --mode=link $(CC) $(CF) $(I) kludemo.c -o kludemo $(LIB) $(CHOLMOD) -lm
  
  kluldemo: kludemo.c Makefile $(LIB)
--	$(CC) $(CFLAGS) $(I) kluldemo.c -o kluldemo $(LIB) $(CHOLMOD) -lm
-+	libtool --tag=CC --mode=link $(CC) $(CFLAGS) $(I) kluldemo.c -o kluldemo $(LIB) $(CHOLMOD) -lm
+-	$(CC) $(CF) $(I) kluldemo.c -o kluldemo $(LIB) $(CHOLMOD) -lm
++	libtool --tag=CC --mode=link $(CC) $(CF) $(I) kluldemo.c -o kluldemo $(LIB) $(CHOLMOD) -lm
  
  klu_simple: klu_simple.c Makefile $(LIB)
--	$(CC) $(CFLAGS) $(I) klu_simple.c -o klu_simple $(LIB) -lm
-+	libtool --tag=CC --mode=link $(CC) $(CFLAGS) $(I) klu_simple.c -o klu_simple $(LIB) -lm
+-	$(CC) $(CF) $(I) klu_simple.c -o klu_simple $(LIB) -lm
++	libtool --tag=CC --mode=link $(CC) $(CF) $(I) klu_simple.c -o klu_simple $(LIB) -lm
  	- ./klu_simple

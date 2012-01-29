@@ -1,12 +1,12 @@
 Summary:	KLU: sparse LU factorization, for circuit simulation
 Summary(pl.UTF-8):	KLU - rzadki rozkład LU na potrzeby symulacji obwodów
 Name:		KLU
-Version:	1.1.1
+Version:	1.1.4
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://www.cise.ufl.edu/research/sparse/klu/%{name}-%{version}.tar.gz
-# Source0-md5:	ab0f4faf5fe200b0286ee6a21853c414
+# Source0-md5:	72b19725946a8bb5f5fbbedb9defddf3
 Patch0:		%{name}-ufconfig.patch
 Patch1:		%{name}-shared.patch
 URL:		http://www.cise.ufl.edu/research/sparse/klu/
