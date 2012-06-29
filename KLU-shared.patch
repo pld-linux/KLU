@@ -277,14 +277,14 @@
 +	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
  
  #-------------------------------------------------------------------------------
---- KLU/Demo/Makefile.orig	2012-01-29 18:59:19.771183432 +0100
-+++ KLU/Demo/Makefile	2012-01-29 21:26:17.944812032 +0100
+--- KLU/Demo/Makefile.orig	2012-06-28 21:31:19.924474872 +0200
++++ KLU/Demo/Makefile	2012-06-29 15:28:57.281761459 +0200
 @@ -5,7 +5,7 @@
  
- include /usr/share/misc/UFconfig.mk
+ include /usr/share/misc/SuiteSparse_config.mk
  
--LIB = ../Lib/libklu.a -lbtf -lamd -lcolamd
-+LIB = ../Lib/libklu.la -lbtf -lamd -lcolamd
+-CLIB = ../Lib/libklu.a  -lbtf -lamd -lcolamd
++CLIB = ../Lib/libklu.la  -lbtf -lamd -lcolamd
  
  CHOLMOD = -lcholmod
  
@@ -300,15 +300,15 @@
 @@ -40,11 +40,11 @@
  	- $(RM) $(CLEAN)
  
- kludemo: kludemo.c Makefile $(LIB)
--	$(CC) $(CF) $(I) kludemo.c -o kludemo $(LIB) $(CHOLMOD) -lm
-+	libtool --tag=CC --mode=link $(CC) $(CF) $(I) kludemo.c -o kludemo $(LIB) $(CHOLMOD) -lm
+ kludemo: kludemo.c Makefile $(CLIB)
+-	$(CC) $(CF) $(I) kludemo.c -o kludemo $(CLIB) $(CHOLMOD) $(LIB)
++	libtool --tag=CC --mode=link $(CC) $(LDFLAGS) $(CF) $(I) kludemo.c -o kludemo $(CLIB) $(CHOLMOD) $(LIB)
  
- kluldemo: kludemo.c Makefile $(LIB)
--	$(CC) $(CF) $(I) kluldemo.c -o kluldemo $(LIB) $(CHOLMOD) -lm
-+	libtool --tag=CC --mode=link $(CC) $(CF) $(I) kluldemo.c -o kluldemo $(LIB) $(CHOLMOD) -lm
+ kluldemo: kludemo.c Makefile $(CLIB)
+-	$(CC) $(CF) $(I) kluldemo.c -o kluldemo $(CLIB) $(CHOLMOD) $(LIB)
++	libtool --tag=CC --mode=link $(CC) $(LDFLAGS) $(CF) $(I) kluldemo.c -o kluldemo $(CLIB) $(CHOLMOD) $(LIB)
  
- klu_simple: klu_simple.c Makefile $(LIB)
--	$(CC) $(CF) $(I) klu_simple.c -o klu_simple $(LIB) -lm
-+	libtool --tag=CC --mode=link $(CC) $(CF) $(I) klu_simple.c -o klu_simple $(LIB) -lm
+ klu_simple: klu_simple.c Makefile $(CLIB)
+-	$(CC) $(CF) $(I) klu_simple.c -o klu_simple $(CLIB) $(LIB)
++	libtool --tag=CC --mode=link $(CC) $(LDFLAGS) $(CF) $(I) klu_simple.c -o klu_simple $(CLIB) $(LIB)
  	- ./klu_simple

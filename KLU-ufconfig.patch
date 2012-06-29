@@ -4,8 +4,8 @@
  
  default: demos
  
--include ../UFconfig/UFconfig.mk
-+include /usr/share/misc/UFconfig.mk
+-include ../SuiteSparse_config/SuiteSparse_config.mk
++include /usr/share/misc/SuiteSparse_config.mk
  
  demos:
  	( cd Lib ; $(MAKE) )
@@ -15,8 +15,8 @@
  
  ccode: all
  
--include ../../UFconfig/UFconfig.mk
-+include /usr/share/misc/UFconfig.mk
+-include ../../SuiteSparse_config/SuiteSparse_config.mk
++include /usr/share/misc/SuiteSparse_config.mk
  
  # for testing only:
  # TEST = -DTESTING
@@ -24,40 +24,41 @@
  C = $(CC) $(CFLAGS)
  
  INC = ../Include/klu.h ../Include/klu_internal.h ../Include/klu_version.h \
--    ../../UFconfig/UFconfig.h Makefile
+-    ../../SuiteSparse_config/SuiteSparse_config.h Makefile
 +    Makefile
  
 -I = -I../../AMD/Include -I../../COLAMD/Include -I../../BTF/Include \
--    -I../Include -I../../UFconfig
+-    -I../Include -I../../SuiteSparse_config
 +I = -I/usr/include/amd -I/usr/include/colamd -I/usr/include/btf \
 +    -I../Include
  
  all: library
  
---- KLU/Demo/Makefile.orig	2009-11-11 21:13:13.000000000 +0100
-+++ KLU/Demo/Makefile	2012-01-10 18:40:07.339511379 +0100
-@@ -3,15 +3,14 @@
+--- KLU/Demo/Makefile.orig	2012-05-28 15:30:41.000000000 +0200
++++ KLU/Demo/Makefile	2012-06-28 21:30:59.997809043 +0200
+@@ -3,16 +3,14 @@
  
  default: all
  
--include ../../UFconfig/UFconfig.mk
-+include /usr/share/misc/UFconfig.mk
+-include ../../SuiteSparse_config/SuiteSparse_config.mk
++include /usr/share/misc/SuiteSparse_config.mk
  
--LIB = ../Lib/libklu.a  ../../BTF/Lib/libbtf.a \
+-CLIB = ../Lib/libklu.a  ../../BTF/Lib/libbtf.a \
 -	../../AMD/Lib/libamd.a ../../COLAMD/Lib/libcolamd.a
-+LIB = ../Lib/libklu.a -lbtf -lamd -lcolamd
++CLIB = ../Lib/libklu.a  -lbtf -lamd -lcolamd
  
--CHOLMOD = ../../CHOLMOD/Lib/libcholmod.a
+-CHOLMOD = ../../CHOLMOD/Lib/libcholmod.a \
+-        ../../SuiteSparse_config/libsuitesparseconfig.a
 +CHOLMOD = -lcholmod
  
--I = -I../../UFconfig -I../../AMD/Include -I../../COLAMD/Include \
+-I = -I../../SuiteSparse_config -I../../AMD/Include -I../../COLAMD/Include \
 -	-I../../BTF/Include -I../Include -I../../CHOLMOD/Include
 +I = -I/usr/include/amd -I/usr/include/colamd \
 +	-I/usr/include/btf -I../Include -I/usr/include/cholmod
  
- all: $(LIB) klu_simple $(CHOLMOD) kludemo kluldemo
+ all: $(CLIB) klu_simple $(CHOLMOD) kludemo kluldemo
  	- ./klu_simple
-@@ -31,21 +30,6 @@
+@@ -32,24 +30,6 @@
  ../Lib/libklu.a:
  	( cd ../Lib ; $(MAKE) )
  
@@ -75,6 +76,9 @@
 -#	( cd ../../CAMD ; $(MAKE) )
 -#	( cd ../../CCOLAMD ; $(MAKE) )
 -#	( cd ../../metis-4.0 ; $(MAKE) )
+-
+-../../SuiteSparse_config/libsuitesparseconfig.a:
+-	( cd ../../SuiteSparse_config ; $(MAKE) )
 -
  purge: distclean
  
