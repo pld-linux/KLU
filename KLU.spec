@@ -1,23 +1,23 @@
 Summary:	KLU: sparse LU factorization, for circuit simulation
 Summary(pl.UTF-8):	KLU - rzadki rozkład LU na potrzeby symulacji obwodów
 Name:		KLU
-Version:	1.2.0
+Version:	1.3.0
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://www.cise.ufl.edu/research/sparse/klu/%{name}-%{version}.tar.gz
-# Source0-md5:	e656523b71364e17b3b9e7ba3fc3981b
+# Source0-md5:	401224a68ae185743da5f0e5808d03dc
 Patch0:		%{name}-ufconfig.patch
 Patch1:		%{name}-shared.patch
 URL:		http://www.cise.ufl.edu/research/sparse/klu/
-BuildRequires:	AMD-devel >= 2.3.0
+BuildRequires:	AMD-devel >= 2.4.0
 BuildRequires:	BTF-devel >= 1.2.0
-BuildRequires:	COLAMD-devel >= 2.8.0
-BuildRequires:	SuiteSparse_config >= 4.0.0
+BuildRequires:	COLAMD-devel >= 2.9.0
+BuildRequires:	SuiteSparse_config >= 4.3.0
 BuildRequires:	libtool >= 2:1.5
-Requires:	AMD >= 2.3.0
+Requires:	AMD >= 2.4.0
 Requires:	BTF >= 1.2.0
-Requires:	COLAMD >= 2.8.0
+Requires:	COLAMD >= 2.9.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -33,10 +33,10 @@ Summary:	Header files for KLU library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki KLU
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	AMD-devel >= 2.3.0
+Requires:	AMD-devel >= 2.4.0
 Requires:	BTF-devel >= 1.2.0
-Requires:	COLAMD-devel >= 2.8.0
-Requires:	SuiteSparse_config >= 4.0.0
+Requires:	COLAMD-devel >= 2.9.0
+Requires:	SuiteSparse_config >= 4.3.0
 
 %description devel
 Header files for KLU library.

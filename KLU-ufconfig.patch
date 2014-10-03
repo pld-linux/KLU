@@ -34,9 +34,9 @@
  
  all: library
  
---- KLU/Demo/Makefile.orig	2012-05-28 15:30:41.000000000 +0200
-+++ KLU/Demo/Makefile	2012-06-28 21:30:59.997809043 +0200
-@@ -3,16 +3,14 @@
+--- KLU/Demo/Makefile.orig	2014-03-21 20:21:27.000000000 +0100
++++ KLU/Demo/Makefile	2014-10-03 16:36:20.732918931 +0200
+@@ -3,23 +3,16 @@
  
  default: all
  
@@ -44,21 +44,29 @@
 +include /usr/share/misc/SuiteSparse_config.mk
  
 -CLIB = ../Lib/libklu.a  ../../BTF/Lib/libbtf.a \
--	../../AMD/Lib/libamd.a ../../COLAMD/Lib/libcolamd.a
-+CLIB = ../Lib/libklu.a  -lbtf -lamd -lcolamd
- 
--CHOLMOD = ../../CHOLMOD/Lib/libcholmod.a \
+-	../../AMD/Lib/libamd.a ../../COLAMD/Lib/libcolamd.a \
 -        ../../SuiteSparse_config/libsuitesparseconfig.a
++CLIB = ../Lib/libklu.a -lbtf -lamd -lcolamd -lsuitesparseconfig
+ 
+-CHOLMOD_LIB = ../../CHOLMOD/Lib/libcholmod.a
+-CHOLMOD = $(CHOLMOD_LIB) $(LAPACK) $(BLAS) $(XERBLA)
 +CHOLMOD = -lcholmod
  
--I = -I../../SuiteSparse_config -I../../AMD/Include -I../../COLAMD/Include \
--	-I../../BTF/Include -I../Include -I../../CHOLMOD/Include
+-ifneq ($(GPU_CONFIG),)
+-CHOLMOD += $(CUDART_LIB) $(CUBLAS_LIB) 
+-endif
 +I = -I/usr/include/amd -I/usr/include/colamd \
 +	-I/usr/include/btf -I../Include -I/usr/include/cholmod
  
- all: $(CLIB) klu_simple $(CHOLMOD) kludemo kluldemo
+-I = -I../../SuiteSparse_config -I../../AMD/Include -I../../COLAMD/Include \
+-	-I../../BTF/Include -I../Include -I../../CHOLMOD/Include
+-
+-all: $(CLIB) klu_simple $(CHOLMOD_LIB) kludemo kluldemo
++all: $(CLIB) klu_simple kludemo kluldemo
  	- ./klu_simple
-@@ -32,24 +30,6 @@
+ 	- ./kludemo < ../Matrix/1c.mtx
+ 	- ./kludemo < ../Matrix/arrowc.mtx
+@@ -37,24 +30,6 @@
  ../Lib/libklu.a:
  	( cd ../Lib ; $(MAKE) )
  

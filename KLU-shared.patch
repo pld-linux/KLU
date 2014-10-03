@@ -277,14 +277,14 @@
 +	libtool --tag=CC --mode=compile $(C) -c -DDLONG $(I) $< -o $@
  
  #-------------------------------------------------------------------------------
---- KLU/Demo/Makefile.orig	2012-06-28 21:31:19.924474872 +0200
-+++ KLU/Demo/Makefile	2012-06-29 15:28:57.281761459 +0200
+--- KLU/Demo/Makefile.orig	2014-10-03 16:36:48.796251087 +0200
++++ KLU/Demo/Makefile	2014-10-03 16:39:42.522910463 +0200
 @@ -5,7 +5,7 @@
  
  include /usr/share/misc/SuiteSparse_config.mk
  
--CLIB = ../Lib/libklu.a  -lbtf -lamd -lcolamd
-+CLIB = ../Lib/libklu.la  -lbtf -lamd -lcolamd
+-CLIB = ../Lib/libklu.a -lbtf -lamd -lcolamd -lsuitesparseconfig
++CLIB = ../Lib/libklu.la -lbtf -lamd -lcolamd -lsuitesparseconfig
  
  CHOLMOD = -lcholmod
  
