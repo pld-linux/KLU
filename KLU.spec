@@ -18,6 +18,7 @@ BuildRequires:	libtool >= 2:1.5
 Requires:	AMD >= 2.4.0
 Requires:	BTF >= 1.2.0
 Requires:	COLAMD >= 2.9.0
+Requires:	SuiteSparse_config-libs >= 4.3.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
