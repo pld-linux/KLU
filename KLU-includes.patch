@@ -1,0 +1,26 @@
+--- KLU/Include/klu.h.orig	2014-03-21 20:21:26.000000000 +0100
++++ KLU/Include/klu.h	2022-12-27 20:29:14.351160837 +0100
+@@ -12,9 +12,9 @@
+ extern "C" {
+ #endif
+ 
+-#include "amd.h"
+-#include "colamd.h"
+-#include "btf.h"
++#include <amd/amd.h>
++#include <colamd/colamd.h>
++#include <btf/btf.h>
+ 
+ /* -------------------------------------------------------------------------- */
+ /* Symbolic object - contains the pre-ordering computed by klu_analyze */
+--- KLU/Include/klu_internal.h.orig	2014-03-21 20:21:26.000000000 +0100
++++ KLU/Include/klu_internal.h	2022-12-27 20:31:27.983770220 +0100
+@@ -8,7 +8,7 @@
+ #define _KLU_INTERNAL_H
+ 
+ #include "klu.h" 
+-#include "btf.h"
++#include <btf/btf.h>
+ #include "klu_version.h"
+ 
+ /* ========================================================================== */

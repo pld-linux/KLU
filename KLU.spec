@@ -2,13 +2,14 @@ Summary:	KLU: sparse LU factorization, for circuit simulation
 Summary(pl.UTF-8):	KLU - rzadki rozkład LU na potrzeby symulacji obwodów
 Name:		KLU
 Version:	1.3.0
-Release:	1
+Release:	2
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://www.cise.ufl.edu/research/sparse/klu/%{name}-%{version}.tar.gz
 # Source0-md5:	401224a68ae185743da5f0e5808d03dc
 Patch0:		%{name}-ufconfig.patch
 Patch1:		%{name}-shared.patch
+Patch2:		%{name}-includes.patch
 URL:		http://www.cise.ufl.edu/research/sparse/klu/
 BuildRequires:	AMD-devel >= 2.4.0
 BuildRequires:	BTF-devel >= 1.2.0
@@ -61,6 +62,7 @@ Statyczna biblioteka KLU.
 %setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__make} \
@@ -77,7 +79,7 @@ install -d $RPM_BUILD_ROOT%{_includedir}/klu
 	DESTDIR=$RPM_BUILD_ROOT \
 	libdir=%{_libdir}
 
-install Include/*.h $RPM_BUILD_ROOT%{_includedir}/klu
+cp -p Include/*.h $RPM_BUILD_ROOT%{_includedir}/klu
 
 %clean
 rm -rf $RPM_BUILD_ROOT
