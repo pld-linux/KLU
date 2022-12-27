@@ -1,17 +1,17 @@
---- KLU/Makefile.orig	2009-11-07 18:37:57.000000000 +0100
-+++ KLU/Makefile	2012-01-10 17:39:06.842722146 +0100
-@@ -2,7 +2,7 @@
+--- KLU/Makefile.orig	2022-12-27 20:20:05.947465128 +0100
++++ KLU/Makefile	2022-12-27 20:20:32.467321457 +0100
+@@ -6,7 +6,7 @@ VERSION = 1.3.0
  
- default: demos
+ default: all
  
 -include ../SuiteSparse_config/SuiteSparse_config.mk
 +include /usr/share/misc/SuiteSparse_config.mk
  
- demos:
- 	( cd Lib ; $(MAKE) )
---- KLU/Lib/Makefile.orig	2009-11-11 21:16:32.000000000 +0100
-+++ KLU/Lib/Makefile	2012-01-10 17:41:46.846060837 +0100
-@@ -2,7 +2,7 @@
+ demos: all
+ 
+--- KLU/Lib/Makefile.orig	2014-03-21 20:21:27.000000000 +0100
++++ KLU/Lib/Makefile	2022-12-27 20:24:34.242678314 +0100
+@@ -2,7 +2,7 @@ default: all
  
  ccode: all
  
@@ -20,8 +20,8 @@
  
  # for testing only:
  # TEST = -DTESTING
-@@ -10,10 +10,10 @@
- C = $(CC) $(CFLAGS)
+@@ -10,10 +10,10 @@ include ../../SuiteSparse_config/SuiteSp
+ C = $(CC) $(CF)
  
  INC = ../Include/klu.h ../Include/klu_internal.h ../Include/klu_version.h \
 -    ../../SuiteSparse_config/SuiteSparse_config.h Makefile
